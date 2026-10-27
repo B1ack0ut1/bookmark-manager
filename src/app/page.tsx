@@ -1,16 +1,9 @@
+"use client";
+import type { Bookmark } from "@/types/bookmark";
+import BookmarkBrowser from "@/components/BookmarkBrowser";
 import BookmarkCard from "@/components/BookmarkCard";
 
-type Bookmark = {
-  id: number;
-  title: string;
-  url: string;
-  description: string;
-  category: string;
-  favorite?: boolean;
-}
-
 export default function HomePage() {
-
   const bookmarks: Bookmark[] = [
     {
       id: 1,
@@ -43,6 +36,8 @@ export default function HomePage() {
     }
   ];
 
+
+
   return (
     <main className="min-h-screen bg-slate-50 p-8">
       <h1 className="text-3xl font-bold text-slate-900">
@@ -52,17 +47,9 @@ export default function HomePage() {
       <p className="mt-2 text-slate-600">
         Save and organize your favorite resources.
       </p>
-      <div className="mt-8 space-y-4">
-        {bookmarks.map((bookmark) => (
-          <BookmarkCard
-            key={bookmark.id}
-            title={bookmark.title}
-            url={bookmark.url}
-            description={bookmark.description}
-            category={bookmark.category}
-          />
-        ))}
-      </div>
+
+      <BookmarkBrowser bookmarks={bookmarks} />
+
     </main>
   );
 }
