@@ -16,21 +16,18 @@ export default function BookmarkSearch({
     setFilteredBookmarks
 }: BookmarkSearchProps) {
 
-    const filteredBookmarks = bookmarks.filter((bookmark) =>
-        bookmark.title.toLowerCase().includes(search.toLowerCase()) ||
-        bookmark.description.toLowerCase().includes(search.toLowerCase())
-    );
 
     function handleSearchChange(e: ChangeEvent<HTMLInputElement>) {
 
         const newSearch = e.target.value;
-        setSearch(newSearch);
-        setFilteredBookmarks(
-            bookmarks.filter((bookmark) =>
-                bookmark.title.toLowerCase().includes(newSearch.toLowerCase()) ||
-                bookmark.description.toLowerCase().includes(newSearch.toLowerCase())
-            )
+
+        const filteredBookmarks = bookmarks.filter((bookmark) =>
+            bookmark.title.toLowerCase().includes(search.toLowerCase()) ||
+            bookmark.description.toLowerCase().includes(search.toLowerCase())
         );
+
+        setSearch(newSearch);
+        setFilteredBookmarks(filteredBookmarks);
     }
 
     return (
