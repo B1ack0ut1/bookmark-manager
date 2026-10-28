@@ -1,4 +1,5 @@
 "use client";
+
 import type { Bookmark } from "@/types/bookmark";
 import BookmarkSearch from "@/components/BookmarkSearch";
 import BookmarkList from "./BookmarkList";
@@ -12,15 +13,16 @@ export default function BookmarkBrowser({
     bookmarks,
 }: BookmarkBrowserProps) {
     const [search, setSearch] = useState("");
-    const [filteredBookmarks, setFilteredBookmarks] = useState<Bookmark[]>(bookmarks);
+    const filteredBookmarks = bookmarks.filter((bookmark) =>
+        bookmark.title.toLowerCase().includes(search.toLowerCase()) ||
+        bookmark.description.toLowerCase().includes(search.toLowerCase())
+    );
 
     return (
         <>
             <BookmarkSearch
-                bookmarks={bookmarks}
                 search={search}
-                setSearch={setSearch}
-                setFilteredBookmarks={setFilteredBookmarks}
+                onSearchChange={setSearch}
              />
 
             <BookmarkList filteredBookmarks={filteredBookmarks} />
