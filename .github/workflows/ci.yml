@@ -16,3 +16,13 @@ jobs:
     
       - name: List project files
         run: ls -la
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+        
+      - name: Check Node.js and npm versions
+        run: |
+          node --version
+          npm --version
