@@ -3,10 +3,16 @@ name: Bookmark Manager CI
 on:
   push:
 
+permissions:
+  contents: read
+
 jobs:
-  hello:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Say hello
-        run: echo "Hello from GitHub Actions!"
+        run: actions/checkout@v6
+    
+      - name: List project files
+        run: ls -la
