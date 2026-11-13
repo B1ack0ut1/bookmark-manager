@@ -1,7 +1,7 @@
 "use client";
 
-import type { Bookmark } from "@/types/bookmark";
-import BookmarkSearch from "@/components/BookmarkSearch";
+import type { Bookmark } from "@/src/types/bookmark";
+import BookmarkSearch from "@/src/components/BookmarkSearch";
 import BookmarkList from "./BookmarkList";
 import FavoritesFilter from "./FavoritesFilter";
 import { useState } from "react";

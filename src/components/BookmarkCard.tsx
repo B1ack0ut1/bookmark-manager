@@ -1,4 +1,4 @@
-import type { Bookmark } from "@/types/bookmark";
+import type { Bookmark } from "@/src/types/bookmark";
 
 type BookmarkCardProps = Pick<
   Bookmark,
