@@ -1,4 +1,4 @@
-import type { Bookmark } from "@/types/bookmark";
+import type { Bookmark } from "@/src/types/bookmark";
 import BookmarkCard from "./BookmarkCard";
 
 type BookmarkListProps = {
@@ -15,6 +15,7 @@ export default function BookmarkList({
                 : filteredBookmarks.map((bookmark) => (
                     <BookmarkCard
                         key={bookmark.id}
+                        id={bookmark.id}
                         title={bookmark.title}
                         url={bookmark.url}
                         description={bookmark.description}
