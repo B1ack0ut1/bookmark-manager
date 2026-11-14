@@ -1,5 +1,6 @@
 import type { Bookmark } from "@/src/types/bookmark";
 import BookmarkBrowserLoader from "@/src/components/BookmarkBrowserLoader";
+import BookmarkForm from "@/src/components/BookmarkForm";
 import { Suspense } from "react";
 
 export default async function HomePage() {
@@ -44,9 +45,12 @@ export default async function HomePage() {
             <p className="mt-2 text-slate-600">
                 Save and organize your favorite resources.
             </p>
-        <Suspense fallback={<p className="mt-8 text-slate-400">Loading bookmarks...</p>}>
-            <BookmarkBrowserLoader />
-        </Suspense>
+
+            <BookmarkForm />
+
+            <Suspense fallback={<p className="mt-8 text-slate-400">Loading bookmarks...</p>}>
+                <BookmarkBrowserLoader />
+            </Suspense>
         </main>
     );
 }
