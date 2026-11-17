@@ -13,10 +13,11 @@ datasource db {
 }
 
 model Bookmark {
-  id          Int   @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   title       String
   url         String
   description String
   category    String
-  favorite   Boolean @default(false)
+  favorite    Boolean   @default(false)
+  updatedAt   DateTime  @default(now()) @updatedAt
 }

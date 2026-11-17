@@ -1,7 +1,8 @@
 "use server";
 
-import { refresh } from "next/cache";
+import { refresh, revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
+import { redirect } from "next/navigation";
 
 export async function createBookmark(formData: FormData) {
     const title = formData.get("title");
@@ -25,7 +26,7 @@ export async function createBookmark(formData: FormData) {
     }
 
     await prisma.bookmark.create({
-        data : {
+        data: {
             title: title.trim(),
             url: parsedUrl.href,
             description: description.trim(),
@@ -53,11 +54,11 @@ export async function setBookmarkFavorite(formData: FormData) {
     await prisma.bookmark.update({
         where: {
             id: parsedId,
-         },
+        },
         data: {
             favorite: parsedFavorite,
         }
-    })
+    });
 
     refresh();
 }
@@ -80,4 +81,48 @@ export async function deleteBookmark(formData: FormData) {
     });
 
     refresh();
+}
+
+export async function updateBookmark(formData: FormData) {
+    const id = formData.get("id");
+    const title = formData.get("title");
+    const url = formData.get("url");
+    const description = formData.get("description");
+    const category = formData.get("category");
+
+    if (
+        typeof id !== "string" || !id.trim() || isNaN(Number(id)) || Number(id) < 1 ||
+        typeof title !== "string" || !title.trim() ||
+        typeof url !== "string" || !url.trim() ||
+        typeof description !== "string" || !description.trim() ||
+        typeof category !== "string" || !category.trim()
+    ) {
+        throw new Error("Fill in all Bookmark fields.");
+    }
+
+    const parsedId = Number(id);
+
+    const parsedUrl = new URL(url.trim());
+
+    if (parsedUrl.protocol !== "http:" && parsedUrl.protocol !== "https:") {
+        throw new Error("Use a http or https URL.");
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    await prisma.bookmark.update({
+        where: {
+            id: parsedId,
+        },
+        data: {
+            title: title.trim(),
+            url: parsedUrl.href,
+            description: description.trim(),
+            category: category.trim(),
+        }
+    });
+
+    revalidatePath("/");
+    revalidatePath(`/bookmarks/${id}/edit`)
+    redirect("/");
 }

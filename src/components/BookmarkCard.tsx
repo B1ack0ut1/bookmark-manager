@@ -1,7 +1,10 @@
 import type { Bookmark } from "@/src/types/bookmark";
 import { setBookmarkFavorite, deleteBookmark } from "@/src/app/actions";
+import Link from "next/link";
 
-type BookmarkCardProps = Bookmark;
+type BookmarkCardProps = Pick<Bookmark,
+    "id" | "title" | "url" | "description" | "category" | "favorite"
+    >;
 
 export default function BookmarkCard({
     id,
@@ -45,15 +48,22 @@ export default function BookmarkCard({
             <p className="mt-2 text-sm text-slate-500">
                 {category}
             </p>
-
-            <a
-                href={url}
-                className="mt-3 inline-block text-blue-600 hover:underline"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Visit website
-            </a>
+            <div>
+                <a
+                    href={url}
+                    className="mt-3 inline-block text-blue-600 hover:underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Visit website
+                </a>
+                <Link
+                    href={`/bookmarks/${id}/edit`}
+                    className="ml-4 text-sm text-slate-400 hover:underline"
+                >
+                    Edit
+                </Link>
+            </div>
         </div>
     )
 }

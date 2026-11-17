@@ -5,4 +5,5 @@ export type Bookmark = {
   description: string;
   category: string;
   favorite?: boolean;
+  updatedAt: Date;
 };
