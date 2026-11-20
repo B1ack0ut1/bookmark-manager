@@ -163,16 +163,17 @@ function validateBookmark(formData: FormData): ValidationResult {
     if (!trimmedDescription) fieldErrors.description = "Enter a description.";
     if (!trimmedCategory) fieldErrors.category = "Enter a category";
 
-    let parsedUrl: URL;
+    let parsedUrl: URL | undefined;
 
     const trimmedUrl =
         typeof url === "string" ? url.trim() : "";
 
-    parsedUrl = new URL(trimmedUrl);
 
-    if (!parsedUrl.href) {
+    if (!trimmedUrl) {
         fieldErrors.url = "Enter a url."
     } else {
+        parsedUrl = new URL(trimmedUrl);
+
         try {
             if (!["http:", "https:"].includes(parsedUrl.protocol)) {
                 fieldErrors.url = "Use an http or https URL.";
@@ -188,6 +189,14 @@ function validateBookmark(formData: FormData): ValidationResult {
             success: false,
             fieldErrors
         };
+    }
+
+    // Defensive narrowing, should be unreachable in practice
+    if (!parsedUrl) {
+        return {
+            success: false,
+            fieldErrors: { url: "Enter a valid url."},
+        }
     }
 
     return {

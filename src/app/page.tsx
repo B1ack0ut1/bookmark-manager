@@ -1,4 +1,3 @@
-import type { Bookmark } from "@/src/types/bookmark";
 import BookmarkBrowserLoader from "@/src/components/BookmarkBrowserLoader";
 import BookmarkForm from "@/src/components/BookmarkForm";
 import { Suspense } from "react";
